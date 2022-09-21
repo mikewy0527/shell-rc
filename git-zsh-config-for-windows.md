@@ -1,7 +1,6 @@
 ## Install zsh for git-for-windows (git-Bash)
 
-0. install `weasel-0.14.3.0-installer.exe`
-1. install `zsh-5.8-3-x86_64.pkg.tar.xz`
+1. install `zsh` from msys2-package-mirrors
 2. terminal color scheme:
 ```
 {
@@ -17,7 +16,6 @@
                     "face": "Fira Code Retina",
                     "size": 10
                 },
-                "guid": "{0e2b3041-5574-4917-9b6a-50f99bc1819d}",
                 "hidden": false,
                 "icon": "C:/Program Files/Git/mingw64/share/git/git-for-windows.ico",
                 "name": "Git Zsh",
