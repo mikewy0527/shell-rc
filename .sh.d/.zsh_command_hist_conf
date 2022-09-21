@@ -1,0 +1,23 @@
+# /* vim: set ft=zsh: */
+
+HISTSIZE=20000
+SAVEHIST=15000
+
+HISTORY_IGNORE="(cd(| .| ..)|ls(| *)|l(| *)|ll(| *)|la(| *)|man(| *)|history|clear|cls|top|htop|vi(|m)|ps|env|sh|bash|zsh|file *|which *|du(| *)|python|* --help|* -h|pip list *|[a-zA-Z0-9]|(pacman|yay) -(S|Q)i *|dnf (list|info|search) *|apt (list|info|search) *|* (|--)version|* -(v|V)|date|time|su (|-))"
+
+setopt pushd_ignore_dups
+setopt pushd_minus
+
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_find_no_dups
+setopt hist_save_no_dups
+
+setopt hist_fcntl_lock 2>/dev/null
+if [[ $_has_re -eq 1 && ! ( $ZSH_VERSION =~ '^[0-4]\.' || $ZSH_VERSION =~ '^5\.0\.[0-4]' ) ]]; then
+    setopt hist_reduce_blanks
+else
+  # This may cause the command messed up due to a memcpy bug
+fi

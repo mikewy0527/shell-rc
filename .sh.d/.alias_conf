@@ -1,0 +1,156 @@
+# /* vim: set ft=zsh: */
+
+# for nnn setting
+if [[ "$(command -v nnn)" != "" ]]; then 
+    n() {
+        # Block nesting of nnn in subshells
+        if [ "${NNNLVL:-0}" -ge 1 ]; then
+            echo "nnn is already running"
+            return
+        fi
+
+        # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
+        # To cd on quit only on ^G, remove the "export" as in:
+        #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+        # NOTE: NNN_TMPFILE is fixed, should not be modified
+        export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+        export NNN_COLORS="2136"
+
+        # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+        # stty start undef
+        # stty stop undef
+        # stty lwrap undef
+        # stty lnext undef
+
+        nnn "$@"
+
+        if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+        fi
+    }
+
+    alias n="n -e"
+fi
+
+alias cls='clear'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+$(shopt -u lastpipe 2>/dev/null)
+SH_NAME="bash"; : | SH_NAME="zsh"
+
+case "$OS_NAME" in
+MINGW*)
+    # Some shortcuts for different directory listings
+    # classify files in colour, ignore 'NTUSER*' file
+    alias ls="ls -hF --color=tty --hide '[Nn][Tt][Uu][Ss][Ee][Rr]*'"
+    alias dir='ls --color=auto --format=vertical'
+    alias vdir='ls --color=auto --format=long'
+    alias ll='ls -l'                              # long list
+    alias lla="ls -la"
+    alias la='ls -A'                              # all but . and ..
+    alias l='ls -CF'                              #
+
+    # Windows: fix the garbled message
+    if [ "$(command -v win)" != "" ]; then
+        alias ping="/bin/win ping"
+        alias netstat="/bin/win netstat"
+        alias nslookup="/bin/win nslookup"
+        alias dig="/bin/win dig"
+    fi
+
+    [[ "$(command -v vim)" != "" ]] && alias vi="vim"
+    ;;
+*)
+    [[ "$(whoami)" != "root" ]] && alias sudo='sudo '
+
+    alias ll="ls -l"
+    alias lla="ls -la"
+    alias lh="ls -lh"
+    alias la="ls -a"
+
+    has_exa=0
+    has_vim=0
+    has_gcc=0
+    has_gpp=0
+    has_clang=0
+    has_clangpp=0
+    has_pbcopy=0
+    has_bat=0
+    has_colordiff=0
+    has_trans=0
+
+    case "$SH_NAME" in
+    zsh)
+        (( $+commands[exa] )) && has_exa=1
+        (( $+commands[vim] )) && has_vim=1
+        (( $+commands[gcc] )) && has_gcc=1
+        (( $+commands[g++] )) && has_gpp=1
+        (( $+commands[clang] )) && has_clang=1
+        (( $+commands[clang++] )) && has_clangpp=1
+        (( $+commands[pbcopy] )) && has_pbcopy=1
+        (( $+commands[bat] )) && has_bat=1
+        (( $+commands[colordiff] )) && has_colordiff=1
+        (( $+commands[trans] )) && has_trans=1
+        ;;
+    bash)
+        [[ "$(command -v exa)" != "" ]] && has_exa=1
+        [[ "$(command -v vim)" != "" ]] && has_vim=1
+        [[ "$(command -v gcc)" != "" ]] && has_gcc=1
+        [[ "$(command -v g++)" != "" ]] && has_gpp=1
+        [[ "$(command -v clang)" != "" ]] && has_clang=1
+        [[ "$(command -v clang++)" != "" ]] && has_clangpp=1
+        [[ "$(command -v pbcopy)" != "" ]] && has_pbcopy=1
+        [[ "$(command -v bat)" != "" ]] && has_bat=1
+        [[ "$(command -v colordiff)" != "" ]] && has_colordiff=1
+        [[ "$(command -v trans)" != "" ]] && has_trans=1
+        ;;
+    *)  ;;
+    esac
+
+
+    case "$(uname -s)" in
+    Linux)
+        alias ls="ls --color=auto"
+        [[ $has_exa -eq 1 ]] && alias ols="/usr/bin/ls --color=auto"
+        ;;
+    Darwin)
+        alias ls='ls -G'
+        [[ $has_exa -eq 1 ]] && alias ols='/bin/ls -G'
+        ;;
+    *)  ;;
+    esac
+
+    [[ $has_exa -eq 1 ]] && alias ls="exa -gH"
+
+    if [ $has_vim -eq 1 ]; then
+        if [ "$TERM" = "linux" ]; then
+            #alias vi="vim --clean"
+            alias vi="vim"
+        else
+            alias vi="vim"
+        fi
+    fi
+
+    # useful c/c++ shortcut
+    [[ $has_gcc -eq 1 ]] && alias gcc-macro="gcc -dM -E - < /dev/null"
+    [[ $has_gpp -eq 1 ]] && alias g++-macro="g++ -dM -E -x c++ - < /dev/null"
+    [[ $has_clang -eq 1 ]] && alias clang-macro="clang -dM -E - < /dev/null"
+    [[ $has_clangpp -eq 1 ]] && alias clang++-macro="clang++ -dM -E -x c++ - < /dev/null"
+
+    # for clear clipboard
+    [[ $has_pbcopy -eq 1 ]] && alias ccb='pbcopy < /dev/null'
+
+    # for bat (cat with syntax highlighting)
+    [[ $has_bat -eq 1 ]] && alias bat='bat --style=plain --theme="Solarized (dark)"'
+
+    # for colordiff
+    [[ $has_colordiff -eq 1 ]] && alias cdf='colordiff'
+
+    # for translate-shell
+    [[ $has_trans -eq 1 ]] && alias trans='http_proxy= https_proxy= HTTP_PROXY= HTTPS_PROXY= trans'
+
+    ;;
+esac
