@@ -13,11 +13,11 @@ setopt no_nomatch
 # http proxy setting
 [[ ! -f ~/.sh.d/.http_proxy_conf ]] || source ~/.sh.d/.http_proxy_conf
 
-# profile switch
+# profiling switch
 PROFILE_STARTUP=false
 
 if [[ "$PROFILE_STARTUP" == true ]]; then
-    rm -f $HOME/misc-tools/zsh_profile.log.* >/dev/null 2>&1
+    rm -f /tmp/zsh_profile.log.* >/dev/null 2>&1
 
     zmodload zsh/zprof
 
@@ -25,7 +25,7 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
     setopt PROMPT_SUBST
     PS4='+$EPOCHREALTIME %N:%i> '
 
-    logfile=$(mktemp $HOME/misc-tools/zsh_profile.log.XXXXXXXX)
+    logfile=$(mktemp /tmp/zsh_profile.log.XXXXXXXX)
     echo "Logging to $logfile"
     exec 3>&2 2>$logfile
 
@@ -41,55 +41,47 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+source "$HOME/.zinit/bin/zinit.zsh" && \
+    autoload -Uz _zinit && \
+    (( ${+_comps} )) && \
+    _comps[zinit]=_zinit
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
-    zdharma-continuum/z-a-rust \
-    zdharma-continuum/z-a-as-monitor \
-    zdharma-continuum/z-a-patch-dl \
-    zdharma-continuum/z-a-bin-gem-node
+    zdharma-continuum/zinit-annex-rust \
+    zdharma-continuum/zinit-annex-readurl \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-bin-gem-node
 
 ### End of Zinit's installer chunk
 
-zinit snippet OMZ::lib/compfix.zsh
-zinit snippet OMZ::lib/completion.zsh
-zinit snippet OMZ::lib/directories.zsh
-zinit snippet OMZ::lib/functions.zsh
-zinit snippet OMZ::lib/key-bindings.zsh
-zinit snippet OMZ::lib/spectrum.zsh
-zinit snippet OMZ::lib/termsupport.zsh
-zinit snippet OMZ::lib/prompt_info_functions.zsh
+zinit wait lucid light-mode for \
+    atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zicdreplay" \
+        zdharma-continuum/fast-syntax-highlighting \
+        zsh-users/zsh-history-substring-search \
+    atload"!_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions \
+    blockf atpull'zinit creinstall -q .' \
+        zsh-users/zsh-completions
 
-zinit ice lucid wait='0' atinit='zpcompinit'
-zinit light zdharma-continuum/fast-syntax-highlighting
+zinit wait lucid light-mode for \
+    OMZ::lib/compfix.zsh \
+    OMZ::lib/completion.zsh \
+    OMZ::lib/functions.zsh \
+    OMZ::lib/key-bindings.zsh \
+    OMZ::lib/spectrum.zsh \
+    OMZ::lib/termsupport.zsh \
+    OMZ::lib/prompt_info_functions.zsh \
+    OMZ::lib/clipboard.zsh \
+    OMZ::lib/git.zsh \
+    OMZ::lib/grep.zsh \
+    OMZ::lib/history.zsh
 
-zinit ice lucid wait="0" atload='_zsh_autosuggest_start'
-zinit light zsh-users/zsh-autosuggestions
-
-zinit ice lucid wait='0'
-zinit light zsh-users/zsh-completions
-
-zinit snippet OMZ::lib/bzr.zsh
-zinit snippet OMZ::lib/cli.zsh
-zinit snippet OMZ::lib/clipboard.zsh
-zinit snippet OMZ::lib/git.zsh
-zinit snippet OMZ::lib/grep.zsh
-zinit snippet OMZ::lib/history.zsh
-zinit snippet OMZ::lib/misc.zsh
-zinit snippet OMZ::lib/nvm.zsh
-zinit snippet OMZ::lib/theme-and-appearance.zsh
-
-zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
-zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
-
-zinit light skywind3000/z.lua
-
-zinit ice lucid wait='1'
-zinit snippet OMZ::plugins/git/git.plugin.zsh
+zinit wait lucid light-mode for \
+    OMZ::plugins/git/git.plugin.zsh \
+    OMZ::plugins/sudo/sudo.plugin.zsh \
+    OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
@@ -133,14 +125,6 @@ Linux)
     esac
 *)  ;;
 esac
-
-# LSCOLORS setting
-export CLICOLOR=1
-export LSCOLORS=ExGxFxdaCxDaDahbadeche
-
-_z() {
-    _zlua "$@";
-}
 
 if [[ "$USER" != "root" ]]; then
     # lazyload function
@@ -238,9 +222,6 @@ if [[ "$USER" != "root" ]]; then
     if (( $+commands[pyenv-virtualenv-init] )); then
         lazyload_venv_add_command pyenv venv
     fi
-
-    # nvm setting
-    [[ ! -f "$HOME/.nvm/env" ]] || source "$HOME/.nvm/env"
 fi
 
 export GDK_SCALE=1.5
