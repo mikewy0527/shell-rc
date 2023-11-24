@@ -65,7 +65,7 @@ zinit wait lucid light-mode for \
     blockf atpull'zinit creinstall -q .' \
         zsh-users/zsh-completions
 
-zinit wait lucid light-mode for \
+zinit lucid light-mode for \
     OMZ::lib/compfix.zsh \
     OMZ::lib/completion.zsh \
     OMZ::lib/functions.zsh \
