@@ -5,7 +5,8 @@ else
     [[ -f "$HOME/.sh.d/.common_env" ]] && . "$HOME/.sh.d/.common_env"
 fi
 
-[[ -f "$HOME/.nvm/env" ]] && . "$HOME/.nvm/env"
+# for fnm setting
+[[ ! -f "$HOME/.sh.d/.fnm_bash_conf" ]] || source "$HOME/.sh.d/.fnm_bash_conf"
 
 # Only set nnn environment in interactive shell
 [[ -f "$HOME/.sh.d/.nnn_conf" ]] && . "$HOME/.sh.d/.nnn_conf"
