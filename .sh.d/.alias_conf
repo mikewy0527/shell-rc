@@ -34,9 +34,6 @@ if [[ "$(command -v nnn)" != "" ]]; then
 fi
 
 alias cls='clear'
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
 
 $(shopt -u lastpipe 2>/dev/null)
 SH_NAME="bash"; : | SH_NAME="zsh"
@@ -71,7 +68,7 @@ MINGW*)
     alias lh="ls -lh"
     alias la="ls -a"
 
-    has_exa=0
+    has_eza=0
     has_vim=0
     has_gcc=0
     has_gpp=0
@@ -84,7 +81,7 @@ MINGW*)
 
     case "$SH_NAME" in
     zsh)
-        (( $+commands[exa] )) && has_exa=1
+        (( $+commands[eza] )) && has_eza=1
         (( $+commands[vim] )) && has_vim=1
         (( $+commands[gcc] )) && has_gcc=1
         (( $+commands[g++] )) && has_gpp=1
@@ -96,7 +93,7 @@ MINGW*)
         (( $+commands[trans] )) && has_trans=1
         ;;
     bash)
-        [[ "$(command -v exa)" != "" ]] && has_exa=1
+        [[ "$(command -v eza)" != "" ]] && has_eza=1
         [[ "$(command -v vim)" != "" ]] && has_vim=1
         [[ "$(command -v gcc)" != "" ]] && has_gcc=1
         [[ "$(command -v g++)" != "" ]] && has_gpp=1
@@ -114,16 +111,25 @@ MINGW*)
     case "$(uname -s)" in
     Linux)
         alias ls="ls --color=auto"
-        [[ $has_exa -eq 1 ]] && alias ols="/usr/bin/ls --color=auto"
+        [[ $has_eza -eq 1 ]] && alias ols="/usr/bin/ls --color=auto"
         ;;
     Darwin)
         alias ls='ls -G'
-        [[ $has_exa -eq 1 ]] && alias ols='/bin/ls -G'
+        [[ $has_eza -eq 1 ]] && alias ols='/bin/ls -G'
+
+        # for mtr
+        local MTR_PATH="/usr/local/opt/mtr/sbin"
+        if [[ -x "$MTR_PATH/mtr" ]]; then
+            alias mtr="$MTR_PATH/mtr"
+            alias mtr-packet="$MTR_PATH/mtr-packet"
+        fi
+        unset MTR_PATH
+
         ;;
     *)  ;;
     esac
 
-    [[ $has_exa -eq 1 ]] && alias ls="exa -gH"
+    [[ $has_eza -eq 1 ]] && alias ls="eza -gH"
 
     if [ $has_vim -eq 1 ]; then
         if [ "$TERM" = "linux" ]; then
