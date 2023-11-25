@@ -4,7 +4,8 @@
 
 [[ -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
 
-[[ -f "$HOME/.nvm/env" ]] && . "$HOME/.nvm/env"
+# for fnm setting
+[[ ! -f "$HOME/.sh.d/.fnm_bash_conf" ]] || source "$HOME/.sh.d/.fnm_bash_conf"
 
 # Only set nnn environment in interactive shell
 [[ -f "$HOME/.sh.d/.nnn_conf" ]] && . "$HOME/.sh.d/.nnn_conf"
