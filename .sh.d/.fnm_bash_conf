@@ -1,0 +1,6 @@
+# /* vim: set ft=bash: */
+
+# for fnm
+if [[ -n "$(command -v fnm)" ]]; then
+    eval "$(fnm env --use-on-cd)"
+fi
