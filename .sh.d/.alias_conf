@@ -5,6 +5,7 @@ alias cls='clear'
 $(shopt -u lastpipe 2>/dev/null)
 SH_NAME="bash"; : | SH_NAME="zsh"
 
+OS_NAME="$(uname -s)"
 case "$OS_NAME" in
 MINGW*)
     # Some shortcuts for different directory listings
@@ -74,8 +75,7 @@ MINGW*)
     *)  ;;
     esac
 
-
-    case "$(uname -s)" in
+    case "$OS_NAME" in
     Linux)
         alias ls="ls --color=auto"
         [[ $has_eza -eq 1 ]] && alias ols="/usr/bin/ls --color=auto"

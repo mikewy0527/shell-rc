@@ -1,8 +1,8 @@
 # /* vim: set ft=zsh */
 
 # http proxy setting
-local address=""
-local port=
+address=""
+port=
 
 export http_proxy="http://$address:$port"
 export https_proxy=$http_proxy
@@ -18,3 +18,6 @@ export NO_PROXY=$no_proxy
 
 export all_proxy="socks5://$address:$port"
 export ALL_PROXY=$all_proxy
+
+unset address
+unset port
