@@ -32,6 +32,10 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
     setopt XTRACE
 fi
 
+# make prompt faster
+export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+export DISABLE_MAGIC_FUNCTIONS=true
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -45,6 +49,7 @@ source "$HOME/.zinit/bin/zinit.zsh" && \
     autoload -Uz _zinit && \
     (( ${+_comps} )) && \
     _comps[zinit]=_zinit
+### End of Zinit's installer chunk
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
@@ -53,8 +58,6 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-readurl \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-bin-gem-node
-
-### End of Zinit's installer chunk
 
 zinit wait lucid light-mode for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zicdreplay" \
@@ -100,10 +103,10 @@ autoload -Uz compinit
 case "$(uname -s)" in
 Darwin)
     # ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed and
-    # these are never upgraded. So link Rubies to Homebrew's OpenSSL 1.1
+    # these are never upgraded. So link Rubies to Homebrew's OpenSSL
     # (brew --prefix too slow, so replace it with absolute path)
     # export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl@1.1"
+    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl@3.1"
 
     # for install specified python version by pyenv
     export PYTHON_CONFIGURE_OPTS="--enable-framework"
@@ -261,6 +264,7 @@ export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # customize prompt
 export POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='$'
+export POWERLEVEL9K_DISABLE_GITSTATUS=true
 
 # >>> xmake >>>
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
