@@ -3,7 +3,7 @@
 HISTSIZE=20000
 SAVEHIST=15000
 
-HISTORY_IGNORE="(cd(| .| ..)|ls(| *)|l(| *)|ll(| *)|la(| *)|man(| *)|history|clear|cls|top|htop|vi(|m)|ps|env|sh|bash|zsh|file *|which *|du(| *)|python|* --help|* -h|pip list *|[a-zA-Z0-9]|(pacman|yay) -(S|Q)i *|dnf (list|info|search) *|apt (list|info|search) *|* (|--)version|* -(v|V)|date|time|su (|-))"
+HISTORY_IGNORE="(cd(| .| ..| *)|ls(| *)|l(| *)|ll(| *)|la(| *)|man(| *)|history|clear|cls|top|htop|vi(|m)|ps|env|sh|bash|zsh|file *|which *|du(| *)|python|* --help|* -h|pip list *|pyenv (version(|s)|(|un)install|local|global) *|brew (help|list|info|deps|(|un)install|search) *|git gui|gitk *|(gba|gst|grv)|man(| *)|history|clear|cls|top|htop|vi(|m)|ps|env|sh|bash|zsh|file *|which *|du(| *))"
 
 setopt pushd_ignore_dups
 setopt pushd_minus
