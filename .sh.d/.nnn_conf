@@ -30,10 +30,10 @@ if [[ "$(command -v nnn)" != "" ]]; then
     }
 
     alias n="n -e"
-fi
 
-export NNN_PLUG='p:preview-tui'
-export NNN_FIFO=/tmp/nnn.fifo
-export TERMINAL=konsole
-# export VISUAL=nnn_ewrap
-export NNN_SSHFS='sshfs -o reconnect,idmap=user,ro,dcache_timeout=20'
+    export NNN_PLUG='p:preview-tui'
+    export NNN_FIFO=/tmp/nnn.fifo
+    export TERMINAL=konsole
+    # export VISUAL=nnn_ewrap
+    export NNN_SSHFS='sshfs -o reconnect,idmap=user,ro,dcache_timeout=20'
+fi
