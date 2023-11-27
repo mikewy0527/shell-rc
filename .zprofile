@@ -1,9 +1,2 @@
-# for pyenv
-if (( $+commands[pyenv] )); then
-    eval "$(pyenv init --path)"
-fi
-
-# for fnm (fast-node-manager)
-if (( $+commands[fnm] )); then
-    eval "$(fnm env --use-on-cd)"
-fi
+[[ -s "$HOME/.sh.d/.pyenv_env" ]] && . "$HOME/.sh.d/.pyenv_env"
+[[ -s "$HOME/.sh.d/.fnm_env" ]] && . "$HOME/.sh.d/.fnm_env"
