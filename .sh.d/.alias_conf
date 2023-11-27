@@ -30,7 +30,7 @@ MINGW*)
     [[ "$(command -v vim)" != "" ]] && alias vi="vim"
     ;;
 *)
-    [[ "$(whoami)" != "root" ]] && alias sudo='sudo '
+    [[ "$USER" != "root" ]] && alias sudo='sudo '
 
     alias ll="ls -l"
     alias lla="ls -la"
