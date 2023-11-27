@@ -1,0 +1,6 @@
+# /* vim: set ft=bash: */
+
+# for pyenv
+if [[ -n "$(command -v pyenv)" ]]; then
+    eval "$(pyenv init --path --no-rehash)"
+fi

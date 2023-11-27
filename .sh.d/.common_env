@@ -12,7 +12,10 @@ SH_NAME="bash"; : | SH_NAME="zsh"
 
 case "$SH_NAME" in
 bash)
-    [[ -s "$HOME/.sh.d/.fnm_bash_conf" ]] && . "$HOME/.sh.d/.fnm_bash_conf"
+    # NOTE: zsh source for pyenv and fnm in .zprofile
+    [[ -s "$HOME/.sh.d/.pyenv_env" ]] && . "$HOME/.sh.d/.pyenv_env"
+    [[ -s "$HOME/.sh.d/.fnm_env" ]] && . "$HOME/.sh.d/.fnm_env"
+
     [[ -s "$HOME/.sh.d/.bash_colored_man_pages_conf" ]] && . "$HOME/.sh.d/.bash_colored_man_pages_conf"
     ;;
 *)  ;;

@@ -13,7 +13,7 @@ export HTTPS_PROXY=$https_proxy
 export FTP_PROXY=$http_proxy
 export RSYNC_PROXY=$http_proxy
 
-export no_proxy="localhost,127.0.0.1,localaddress,local,.localdomain.com"
+export no_proxy="localhost,127.0.0.1,localaddress,.local,.localdomain.com"
 export NO_PROXY=$no_proxy
 
 export all_proxy="socks5://$address:$port"

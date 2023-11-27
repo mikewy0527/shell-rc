@@ -53,7 +53,7 @@ source "$HOME/.zinit/bin/zinit.zsh" && \
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-zinit light-mode for \
+zinit lucid light-mode for \
     zdharma-continuum/zinit-annex-rust \
     zdharma-continuum/zinit-annex-readurl \
     zdharma-continuum/zinit-annex-patch-dl \
@@ -256,7 +256,7 @@ export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 # command history setting
 [[ ! -f ~/.sh.d/.zsh_command_hist_conf ]] || source ~/.sh.d/.zsh_command_hist_conf
 
-# setting alias
+# alias setting
 [[ ! -f ~/.sh.d/.alias_conf ]] || source ~/.sh.d/.alias_conf
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
