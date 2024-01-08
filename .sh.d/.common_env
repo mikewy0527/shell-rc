@@ -6,17 +6,3 @@
 [[ -s "$HOME/.sh.d/.w3m_env" ]] && . "$HOME/.sh.d/.w3m_env"
 [[ -s "$HOME/go/env" ]] && . "$HOME/go/env"
 [[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-
-$(shopt -u lastpipe 2>/dev/null)
-SH_NAME="bash"; : | SH_NAME="zsh"
-
-case "$SH_NAME" in
-bash)
-    # NOTE: zsh source for pyenv and fnm in .zprofile
-    [[ -s "$HOME/.sh.d/.pyenv_env" ]] && . "$HOME/.sh.d/.pyenv_env"
-    [[ -s "$HOME/.sh.d/.fnm_env" ]] && . "$HOME/.sh.d/.fnm_env"
-
-    [[ -s "$HOME/.sh.d/.bash_colored_man_pages_conf" ]] && . "$HOME/.sh.d/.bash_colored_man_pages_conf"
-    ;;
-*)  ;;
-esac

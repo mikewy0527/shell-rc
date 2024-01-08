@@ -2,6 +2,7 @@
 
 # append following code to ~/.bashrc
 [[ -s "$HOME/.sh.d/.common_env" ]] && . "$HOME/.sh.d/.common_env"
+[[ -s "$HOME/.sh.d/.bash_common_env" ]] && . "$HOME/.sh.d/.bash_common_env"
 
 if [[ -n "$PS1" ]]; then
     # http proxy setting

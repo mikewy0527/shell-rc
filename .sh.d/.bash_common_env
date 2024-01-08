@@ -1,0 +1,7 @@
+# /* vim: set ft=sh: */
+
+# NOTE: zsh source for pyenv and fnm in .zprofile
+[[ -s "$HOME/.sh.d/.pyenv_env" ]] && . "$HOME/.sh.d/.pyenv_env"
+[[ -s "$HOME/.sh.d/.fnm_env" ]] && . "$HOME/.sh.d/.fnm_env"
+
+[[ -s "$HOME/.sh.d/.bash_colored_man_pages_conf" ]] && . "$HOME/.sh.d/.bash_colored_man_pages_conf"

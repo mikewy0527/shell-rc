@@ -60,10 +60,12 @@ zinit lucid light-mode for \
     zdharma-continuum/zinit-annex-bin-gem-node
 
 zinit wait lucid light-mode for \
-    atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zicdreplay" \
+    atclone'(){local f;cd -q →*;for f (*~*.zwc){zcompile -Uz -- ${f}};}' \
+    atload'FAST_HIGHLIGHT[chroma-man]=' atpull'%atclone' \
+    compile'.*fast*~*.zwc' nocompletions \
         zdharma-continuum/fast-syntax-highlighting \
-        zsh-users/zsh-history-substring-search \
     atload"!_zsh_autosuggest_start" \
+    atinit"ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50" \
         zsh-users/zsh-autosuggestions \
     blockf atpull'zinit creinstall -q .' \
         zsh-users/zsh-completions
@@ -265,6 +267,13 @@ export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 # customize prompt
 export POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='$'
 export POWERLEVEL9K_DISABLE_GITSTATUS=true
+
+# zsh partial line (PROMPT_CR and  PROMPT_SP)
+#   When a partial line is preserved, by default you will see an inverse+bold
+#   character at the end of the partial line: a "%" for a normal user or a "#"
+#   for root. If set, the shell parameter PROMPT_EOL_MARK can be used to
+#   customize how the end of partial lines are shown.
+export PROMPT_EOL_MARK=''
 
 # >>> xmake >>>
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
