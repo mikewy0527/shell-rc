@@ -1,11 +1,12 @@
 # /* vim: set ft=zsh: */
 
+# Need to source after zinit initialized
 [[ -n "$OSTYPE" ]] || return 0
 
 alias cls='clear'
 
 case "$OSTYPE" in
-MINGW*)
+mingw*)
     # Some shortcuts for different directory listings
     # classify files in colour, ignore 'NTUSER*' file
     alias ls="ls -hF --color=tty --hide '[Nn][Tt][Uu][Ss][Ee][Rr]*'"
@@ -77,11 +78,11 @@ MINGW*)
     esac
 
     case "$OSTYPE" in
-    Linux)
+    linux*)
         alias ls="ls --color=auto"
         [[ $has_eza -eq 1 ]] && alias ols="/usr/bin/ls --color=auto"
         ;;
-    Darwin)
+    darwin*)
         alias ls='ls -G'
         [[ $has_eza -eq 1 ]] && alias ols='/bin/ls -G'
         ;;

@@ -1,6 +1,6 @@
 # /* vim: set ft=zsh: */
 
-if [[ "$(command -v nnn)" != "" ]]; then 
+if [[ -n "$(command -v nnn)" ]]; then 
     n() {
         # Block nesting of nnn in subshells
         if [ "${NNNLVL:-0}" -ge 1 ]; then
@@ -33,7 +33,17 @@ if [[ "$(command -v nnn)" != "" ]]; then
 
     export NNN_PLUG='p:preview-tui'
     export NNN_FIFO=/tmp/nnn.fifo
-    export TERMINAL=konsole
+
+    case "$OSTYPE" in
+    linux*)
+        export TERMINAL=konsole
+        ;;
+    darwin*)
+        export TERMINAL=iTerm.app
+        ;;
+    *)  ;;
+    esac
+
     # export VISUAL=nnn_ewrap
     export NNN_SSHFS='sshfs -o reconnect,idmap=user,ro,dcache_timeout=20'
 fi
