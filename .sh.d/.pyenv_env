@@ -1,3 +1,5 @@
+# /* vim: set ft=bash: */
+
 # for pyenv
 if [[ -n "$(command -v pyenv)" ]]; then
     if [[ -d "$HOME/.pyenv/bin" ]]; then
