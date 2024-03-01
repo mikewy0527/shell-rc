@@ -6,7 +6,7 @@
 alias cls='clear'
 
 case "$OSTYPE" in
-mingw*)
+mingw* | msys*)
     # Some shortcuts for different directory listings
     # classify files in colour, ignore 'NTUSER*' file
     alias ls="ls -hF --color=tty --hide '[Nn][Tt][Uu][Ss][Ee][Rr]*'"

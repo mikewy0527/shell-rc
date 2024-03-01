@@ -1,0 +1,4 @@
+# /* vim: set ft=sh: */
+
+export VCPKG_DISABLE_METRICS=1
+export VCPKG_FORCE_SYSTEM_BINARIES=1

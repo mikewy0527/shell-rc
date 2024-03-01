@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# go shell setup
+[[ "$GOROOT" != "/usr/lib/go" ]] && export GOROOT="/usr/lib/go"
+[[ "$GOPATH" != "$HOME/go" ]] && export GOPATH="$HOME/go"
+
+# affix colons on either side of $PATH to simplify matching
+case ":${PATH}:" in
+    *:"$GOROOT/bin":*)
+        ;;
+    *)
+        # Prepending path in case a installed go needs to be overridden
+        export PATH="$GOROOT/bin:$PATH"
+        ;;
+esac

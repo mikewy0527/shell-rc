@@ -1,6 +1,6 @@
 # /* vim: set ft=sh: */
 
-# NOTE: zsh source for pyenv and fnm in .zprofile
+# NOTE: zsh setting pyenv and fnm(fast-node-manager) in .zprofile
 [[ -s "$HOME/.sh.d/.pyenv_env" ]] && . "$HOME/.sh.d/.pyenv_env"
 [[ -s "$HOME/.sh.d/.fnm_env" ]] && . "$HOME/.sh.d/.fnm_env"
 
