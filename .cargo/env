@@ -1,12 +1,16 @@
 #!/bin/sh
 
 # rustup shell setup
+CARGO_HOME="$HOME/.cargo"
+
+[[ -d "$CARGO_HOME" ]] || return
+
 # affix colons on either side of $PATH to simplify matching
 case ":${PATH}:" in
-    *:"$HOME/.cargo/bin":*)
+    *:"$CARGO_HOME/bin":*)
         ;;
     *)
         # Prepending path in case a system-installed rustc needs to be overridden
-        export PATH="$HOME/.cargo/bin:$PATH"
+        export PATH="$CARGO_HOME/bin:$PATH"
         ;;
 esac

@@ -1,15 +1,19 @@
 #!/bin/sh
 
 # go shell setup
-[[ "$GOROOT" != "/usr/lib/go" ]] && export GOROOT="/usr/lib/go"
-[[ "$GOPATH" != "$HOME/go" ]] && export GOPATH="$HOME/go"
+GO_ROOT_PATH="/usr/lib/go"
+
+[[ -d "$GO_ROOT_PATH" ]] || return
+
+[[ -z "$GOROOT" ]] && export GOROOT="$GO_ROOT_PATH"
+[[ -z "$GOPATH" ]] && export GOPATH="$HOME/go"
 
 # affix colons on either side of $PATH to simplify matching
 case ":${PATH}:" in
-    *:"$GOROOT/bin":*)
+    *:"$GOPATH/bin":*)
         ;;
     *)
         # Prepending path in case a installed go needs to be overridden
-        export PATH="$GOROOT/bin:$PATH"
+        export PATH="$GOPATH/bin:$PATH"
         ;;
 esac
