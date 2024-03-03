@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+# /* vim: set ft=zsh: */
 
 # Improve ls colors for Solarized color theme
 #   Reference: https://github.com/seebi/dircolors-solarized
