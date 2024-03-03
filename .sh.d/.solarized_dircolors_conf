@@ -1,0 +1,32 @@
+#!/bin/bash -eu
+
+# Improve ls colors for Solarized color theme
+#   Reference: https://github.com/seebi/dircolors-solarized
+
+setting_colors() {
+    local suffix="$1"
+    local src_path="$HOME/Documents/github/dircolors-solarized"
+    local src_file=""
+    local dest_file="$HOME/.dir_colors"
+
+    if [[ "$TERM" = *"256color" ]]; then
+        src_file="$src_path/dircolors.256dark"
+    else
+        src_file="$src_path/dircolors.ansi-$suffix"
+    fi
+
+    if [[ -n "$src_file" ]]; then
+        ln -sf "$src_file" "$dest_file"
+        eval "$(dircolors "$dest_file")"
+    fi
+}
+
+case "$KONSOLETHEME" in
+Solarized-Dark)
+    setting_colors "dark"
+    ;;
+Solarized-Light)
+    setting_colors "light"
+    ;;
+*)  ;;
+esac

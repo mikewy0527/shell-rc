@@ -2,6 +2,7 @@
 
 [[ -s "$HOME/.sh.d/home-local-bin.sh" ]] && . "$HOME/.sh.d/home-local-bin.sh"
 [[ -s "$HOME/.sh.d/.console_color_conf" ]] && . "$HOME/.sh.d/.console_color_conf"
+[[ -s "$HOME/.sh.d/.solarized_dircolors_conf" ]] && . "$HOME/.sh.d/.solarized_dircolors_conf"
 [[ -s "$HOME/.sh.d/.firefox_wayland_conf" ]] && . "$HOME/.sh.d/.firefox_wayland_conf"
 [[ -s "$HOME/.sh.d/.vcpkg_conf" ]] && . "$HOME/.sh.d/.vcpkg_conf"
 [[ -s "$HOME/.sh.d/.w3m_env" ]] && . "$HOME/.sh.d/.w3m_env"
