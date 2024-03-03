@@ -22,10 +22,10 @@ setting_colors() {
 }
 
 case "$KONSOLETHEME" in
-Solarized-Dark)
+Solarized-Dark*)
     setting_colors "dark"
     ;;
-Solarized-Light)
+Solarized-Light*)
     setting_colors "light"
     ;;
 *)  ;;
