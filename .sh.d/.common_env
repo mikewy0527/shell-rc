@@ -1,10 +1,26 @@
 # /* vim: set ft=sh: */
 
+export KONSOLETHEME=Solarized-Dark
+
+case "$OSTYPE" in
+darwin*)
+    if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+        export KONSOLETHEME="$ITERM_PROFILE"
+    fi
+
+    # for using homebrew clang
+    [[ -s "$HOME/.config/clangd/env" ]] && . "$HOME/.config/clangd/env"
+    ;;
+linux*)
+    [[ -s "$HOME/.sh.d/.firefox_wayland_conf" ]] && . "$HOME/.sh.d/.firefox_wayland_conf"
+    [[ -s "$HOME/.sh.d/.vcpkg_conf" ]] && . "$HOME/.sh.d/.vcpkg_conf"
+    [[ -s "$HOME/.sh.d/.w3m_env" ]] && . "$HOME/.sh.d/.w3m_env"
+    ;;
+*)  ;;
+esac
+
 [[ -s "$HOME/.sh.d/home-local-bin.sh" ]] && . "$HOME/.sh.d/home-local-bin.sh"
 [[ -s "$HOME/.sh.d/.console_color_conf" ]] && . "$HOME/.sh.d/.console_color_conf"
 [[ -s "$HOME/.sh.d/.solarized_dircolors_conf" ]] && . "$HOME/.sh.d/.solarized_dircolors_conf"
-[[ -s "$HOME/.sh.d/.firefox_wayland_conf" ]] && . "$HOME/.sh.d/.firefox_wayland_conf"
-[[ -s "$HOME/.sh.d/.vcpkg_conf" ]] && . "$HOME/.sh.d/.vcpkg_conf"
-[[ -s "$HOME/.sh.d/.w3m_env" ]] && . "$HOME/.sh.d/.w3m_env"
 [[ -s "$HOME/go/env" ]] && . "$HOME/go/env"
 [[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
