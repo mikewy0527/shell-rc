@@ -102,8 +102,8 @@ autoload -Uz compinit
     fi
 }
 
-case "$(uname -s)" in
-Darwin)
+case "$OSTYPE" in
+darwin*)
     # ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed and
     # these are never upgraded. So link Rubies to Homebrew's OpenSSL
     # (brew --prefix too slow, so replace it with absolute path)
@@ -117,17 +117,6 @@ Darwin)
     export HOMEBREW_NO_AUTO_UPDATE=true
     export HOMEBREW_NO_ANALYTICS=1
     ;;
-Linux)
-    case "$(lsb_release -si)" in
-    Ubuntu | Debian)
-        # for pyenv
-        # On ubuntu/debian, current pyenv version not found in package manager, so
-        # installed by git clone, need to set env manully
-        export PYENV_ROOT="$HOME/.pyenv"
-        export PATH="$PYENV_ROOT/bin:$PATH"
-        ;;
-    *)  ;;
-    esac
 *)  ;;
 esac
 
@@ -158,11 +147,11 @@ if [[ "$USER" != "root" ]]; then
 
     _lazyload_completion_rbenv() {
         local complete_file=""
-        case "$(uname -s)" in
-        Linux)
+        case "$OSTYPE" in
+        linux*)
             complete_file="/usr/lib/rbenv/completions/rbenv.zsh"
             ;;
-        Darwin)
+        darwin*)
             complete_file="/usr/local/opt/rbenv/completions/rbenv.zsh"
             ;;
         *)  ;;
@@ -186,8 +175,8 @@ if [[ "$USER" != "root" ]]; then
         # pyenv installed by git clone, so the completion file path was set point
         # to cloned-dir
         local complete_file=""
-        case "$(uname -s)" in
-        Linux)
+        case "$OSTYPE" in
+        linux*)
             case "$(lsb_release -si)" in
             Manjaro | ArchLinux)
                 complete_file="/usr/share/zsh/site-functions/_pyenv"
@@ -197,7 +186,7 @@ if [[ "$USER" != "root" ]]; then
                 ;;
             *)  ;;
             esac
-        Darwin)
+        darwin*)
             complete_file="/usr/local/opt/pyenv/completions/pyenv.zsh"
             ;;
         *)  ;;
@@ -229,18 +218,18 @@ if [[ "$USER" != "root" ]]; then
     fi
 fi
 
-export GDK_SCALE=1.5
-export GDK_DPI_SCALE=1
-export PLASMA_USE_QT_SCALING=1
-export ELM_SCALE=2
-
-# make /<drive>/... autocompletion work.
-# e.g: /c/Windows/
-local drives=$(mount | sed -rn 's#^[A-Z]: on /([a-z]).*#\1#p' | tr '\n' ' ')
-zstyle ':completion:*' fake-files /: "/:$drives"
-# local drives=($(mount | command grep --perl-regexp '^\w: on /\w ' | cut --delimiter=' ' --fields=3))
-# zstyle ':completion:*' fake-files "/:${(j. .)drives//\//}"
-unset drives
+case "$OSTYPE" in
+mingw* | msys*)
+    # make /<drive>/... autocompletion work.
+    # e.g: /c/Windows/
+    local drives=$(mount | sed -rn 's#^[A-Z]: on /([a-z]).*#\1#p' | tr '\n' ' ')
+    zstyle ':completion:*' fake-files /: "/:$drives"
+    # local drives=($(mount | command grep --perl-regexp '^\w: on /\w ' | cut --delimiter=' ' --fields=3))
+    # zstyle ':completion:*' fake-files "/:${(j. .)drives//\//}"
+    unset drives
+    ;;
+*)  ;;
+esac
 
 export EDITOR="$(command -v vim)"
 
@@ -268,7 +257,7 @@ export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='$'
 export POWERLEVEL9K_DISABLE_GITSTATUS=true
 
-# zsh partial line (PROMPT_CR and  PROMPT_SP)
+# zsh partial line (PROMPT_CR and PROMPT_SP)
 #   When a partial line is preserved, by default you will see an inverse+bold
 #   character at the end of the partial line: a "%" for a normal user or a "#"
 #   for root. If set, the shell parameter PROMPT_EOL_MARK can be used to
