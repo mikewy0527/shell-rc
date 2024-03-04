@@ -177,15 +177,17 @@ if [[ "$USER" != "root" ]]; then
         local complete_file=""
         case "$OSTYPE" in
         linux*)
-            case "$(lsb_release -si)" in
-            Manjaro | ArchLinux)
+            local DistributorId="$(grep -E "\bID\b" /etc/os-release | cut -d'=' -f2)"
+            case "$DistributorId" in
+            arch)
                 complete_file="/usr/share/zsh/site-functions/_pyenv"
                 ;;
-            Ubuntu | Debian)
+            debian)
                 complete_file="$PYENV_ROOT/completions/pyenv.zsh"
                 ;;
             *)  ;;
             esac
+            ;;
         darwin*)
             complete_file="/usr/local/opt/pyenv/completions/pyenv.zsh"
             ;;
