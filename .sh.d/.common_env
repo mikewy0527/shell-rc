@@ -1,15 +1,11 @@
 # /* vim: set ft=sh: */
 
-export KONSOLETHEME=Solarized-Dark
-
 case "$OSTYPE" in
 darwin*)
+    export KONSOLETHEME=Solarized-Dark
     if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
         export KONSOLETHEME="$ITERM_PROFILE"
     fi
-
-    # for using homebrew clang
-    [[ -s "$HOME/.config/clangd/env" ]] && . "$HOME/.config/clangd/env"
     ;;
 linux*)
     [[ -s "$HOME/.sh.d/.firefox_wayland_conf" ]] && . "$HOME/.sh.d/.firefox_wayland_conf"
