@@ -16,7 +16,14 @@ setting_colors() {
     fi
 
     if [[ -n "$src_file" ]]; then
-        ln -sf "$src_file" "$dest_file"
+        case "$OSTYPE" in
+        mingw* | msys*)
+            cp -f "$src_file" "$dest_file"
+            ;;
+        *)
+            ln -sf "$src_file" "$dest_file"
+            ;;
+        esac
         eval "$(dircolors "$dest_file")"
     fi
 }
