@@ -18,14 +18,14 @@ mingw* | msys*)
     alias l='ls -CF'                              #
 
     # Windows: fix the garbled message
-    if [ "$(command -v win)" != "" ]; then
+    if [[ -n "$(command -v win)" ]]; then
         alias ping="/bin/win ping"
         alias netstat="/bin/win netstat"
         alias nslookup="/bin/win nslookup"
         alias dig="/bin/win dig"
     fi
 
-    [[ "$(command -v vim)" != "" ]] && alias vi="vim"
+    [[ -n "$(command -v vim)" ]] && alias vi="vim"
     ;;
 *)
     [[ "$USER" != "root" ]] && alias sudo='sudo '
@@ -90,15 +90,7 @@ mingw* | msys*)
     esac
 
     [[ $has_eza -eq 1 ]] && alias ls="eza -gH"
-
-    if [ $has_vim -eq 1 ]; then
-        if [ "$TERM" = "linux" ]; then
-            #alias vi="vim --clean"
-            alias vi="vim"
-        else
-            alias vi="vim"
-        fi
-    fi
+    [[ $has_vim -eq 1 ]] && alias vi="vim"
 
     # useful c/c++ shortcut
     [[ $has_gcc -eq 1 ]] && alias gcc-macro="gcc -dM -E - < /dev/null"
