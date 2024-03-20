@@ -16,15 +16,26 @@ setting_colors() {
     fi
 
     if [[ -n "$src_file" ]]; then
+        local color_cmd="dircolors"
         case "$OSTYPE" in
         mingw* | msys*)
             cp -f "$src_file" "$dest_file"
+            ;;
+        darwin*)
+            case "$(sysctl -n machdep.cpu.brand_string)" in
+            Apple*)
+                color_cmd="/opt/homebrew/bin/gdircolors"
+                ;;
+            *)
+                color_cmd="/usr/local/bin/gdircolors"
+                ;;
+            esac
             ;;
         *)
             ln -sf "$src_file" "$dest_file"
             ;;
         esac
-        eval "$(dircolors "$dest_file")"
+        eval "$("$color_cmd" "$dest_file")"
     fi
 }
 
