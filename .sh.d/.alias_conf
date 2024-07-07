@@ -102,7 +102,19 @@ mingw* | msys*)
     [[ $has_pbcopy -eq 1 ]] && alias ccb='pbcopy < /dev/null'
 
     # for bat (cat with syntax highlighting)
-    [[ $has_bat -eq 1 ]] && alias bat='bat --style=plain --theme="Solarized (dark)"'
+    if [[ $has_bat -eq 1 ]]; then
+        case "$KONSOLETHEME" in
+        Solarized-Dark)
+            alias bat='bat --style=plain --theme="Solarized (dark)"'
+            ;;
+        Solarized-Light)
+            alias bat='bat --style=plain --theme="Solarized (light)"'
+            ;;
+        *)
+            alias bat='bat --style=plain --theme="ansi"'
+            ;;
+        esac
+    fi
 
     # for colordiff
     [[ $has_colordiff -eq 1 ]] && alias cdf='colordiff'
