@@ -8,6 +8,8 @@ if [[ -n "$PS1" ]]; then
     # http proxy setting
     [[ -s "$HOME/.sh.d/.http_proxy_conf" ]] && . "$HOME/.sh.d/.http_proxy_conf"
 
+    [[ -s "$HOME/.sh.d/autostart_sway_conf" ]] && . "$HOME/.sh.d/autostart_sway_conf"
+
     # Only set nnn environment in interactive shell
     [[ -s "$HOME/.sh.d/.nnn_conf" ]] && . "$HOME/.sh.d/.nnn_conf"
 

@@ -11,7 +11,7 @@ fi
 setopt no_nomatch
 
 # http proxy setting
-[[ ! -f ~/.sh.d/.http_proxy_conf ]] || source ~/.sh.d/.http_proxy_conf
+[[ ! -f "$HOME/.sh.d/.http_proxy_conf" ]] || source "$HOME/.sh.d/.http_proxy_conf"
 
 # profiling switch
 PROFILE_STARTUP=false
@@ -243,14 +243,16 @@ bindkey "^[l" down-case-word
 
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
+[[ ! -f "$HOME/.sh.d/autostart_sway_conf" ]] || source "$HOME/.sh.d/autostart_sway_conf"
+
 # Only set nnn environment in interactive shell
-[[ ! -f ~/.sh.d/.nnn_conf ]] || source ~/.sh.d/.nnn_conf
+[[ ! -f "$HOME/.sh.d/.nnn_conf" ]] || source "$HOME/.sh.d/.nnn_conf"
 
 # command history setting
-[[ ! -f ~/.sh.d/.zsh_command_hist_conf ]] || source ~/.sh.d/.zsh_command_hist_conf
+[[ ! -f "$HOME/.sh.d/.zsh_command_hist_conf" ]] || source "$HOME/.sh.d/.zsh_command_hist_conf"
 
 # alias setting
-[[ ! -f ~/.sh.d/.alias_conf ]] || source ~/.sh.d/.alias_conf
+[[ ! -f "$HOME/.sh.d/.alias_conf" ]] || source "$HOME/.sh.d/.alias_conf"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
