@@ -1,7 +1,7 @@
 # /* vim: set ft=sh: */
 
 # Customize colors for console/virtual terminal
-if [ "$TERM" = "linux" ]; then
+if [[ "$TERM" == "linux" ]]; then
     display_motd_info() {
         echo ""
         echo $(uname -nrsvm)
@@ -9,22 +9,44 @@ if [ "$TERM" = "linux" ]; then
         echo "Last login: $(last -F -1 -R $USER | head -1 | awk -F' ' '{ printf "%s %s %s  %s %s\n", $3, $4, $5, $6, $7 }')"
     }
 
-    echo -en "\e]P01c2127" # black
-    echo -en "\e]P81c2127" # darkgrey
-    echo -en "\e]P1aa0909" # darkred
-    echo -en "\e]P9d61313" # red
-    echo -en "\e]P2009900" # darkgreen
-    echo -en "\e]PA10be13" # green
-    echo -en "\e]P3aa5500" # brown
-    echo -en "\e]PBcb973d" # yellow
-    echo -en "\e]P41365a0" # darkblue
-    echo -en "\e]PC1989d8" # blue
-    echo -en "\e]P58646a0" # darkmagenta
-    echo -en "\e]PD9b59b6" # magenta
-    echo -en "\e]P6159d82" # darkcyan
-    echo -en "\e]PE1abc9c" # cyan
-    echo -en "\e]P7aaafb4" # lightgrey
-    echo -en "\e]PFdedede" # white
+    export KONSOLETHEME="Solarized-Dark"
+
+    if [[ "$KONSOLETHEME" == "Solarized-Dark" ]]; then
+        echo -en "\e]P0002b36" # black
+        echo -en "\e]P8073642" # bright black
+        echo -en "\e]P1dc322f" # red
+        echo -en "\e]P9cb4b16" # bright red
+        echo -en "\e]P2859900" # green
+        echo -en "\e]PA586e75" # bright green
+        echo -en "\e]P3b58900" # yellow
+        echo -en "\e]PB657b83" # bright yellow
+        echo -en "\e]P4268bd2" # blue
+        echo -en "\e]PC839496" # bright blue
+        echo -en "\e]P5d33682" # magenta
+        echo -en "\e]PD6c71c4" # bright magenta
+        echo -en "\e]P62aa198" # cyan
+        echo -en "\e]PE93a1a1" # bright cyan
+        echo -en "\e]P7eee8d5" # white
+        echo -en "\e]PFfdf6e3" # bright white
+    else
+        echo -en "\e]P01c2127" # black
+        echo -en "\e]P81c2127" # darkgrey
+        echo -en "\e]P1aa0909" # darkred
+        echo -en "\e]P9d61313" # red
+        echo -en "\e]P2009900" # darkgreen
+        echo -en "\e]PA10be13" # green
+        echo -en "\e]P3aa5500" # brown
+        echo -en "\e]PBcb973d" # yellow
+        echo -en "\e]P41365a0" # darkblue
+        echo -en "\e]PC1989d8" # blue
+        echo -en "\e]P58646a0" # darkmagenta
+        echo -en "\e]PD9b59b6" # magenta
+        echo -en "\e]P6159d82" # darkcyan
+        echo -en "\e]PE1abc9c" # cyan
+        echo -en "\e]P7aaafb4" # lightgrey
+        echo -en "\e]PFdedede" # white
+    fi
+
     clear 		   # for background artifacting
 
     # Uncomment the below line to show motd info (default: not show)
