@@ -36,7 +36,10 @@ if [[ -n "$(command -v nnn)" ]]; then
 
     case "$OSTYPE" in
     linux*)
-        export TERMINAL=konsole
+        case "$(ps -e | grep -m 1 -o -F -e sway)" in
+            sway) export TERMINAL=foot    ;;
+            *)    export TERMINAL=konsole ;;
+        esac
         ;;
     darwin*)
         export TERMINAL=iTerm.app

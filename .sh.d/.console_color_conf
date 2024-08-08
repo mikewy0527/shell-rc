@@ -12,8 +12,8 @@ if [[ "$TERM" == "linux" ]]; then
     export KONSOLETHEME="Solarized-Dark"
 
     if [[ "$KONSOLETHEME" == "Solarized-Dark" ]]; then
-        echo -en "\e]P0002b36" # black
-        echo -en "\e]P8073642" # bright black
+        echo -en "\e]P0002b36" # bright black
+        echo -en "\e]P8006078" # black
         echo -en "\e]P1dc322f" # red
         echo -en "\e]P9cb4b16" # bright red
         echo -en "\e]P2859900" # green
@@ -26,8 +26,25 @@ if [[ "$TERM" == "linux" ]]; then
         echo -en "\e]PD6c71c4" # bright magenta
         echo -en "\e]P62aa198" # cyan
         echo -en "\e]PE93a1a1" # bright cyan
-        echo -en "\e]P7eee8d5" # white
+        echo -en "\e]P7839496" # white
         echo -en "\e]PFfdf6e3" # bright white
+    elif [[ "$KONSOLETHEME" == "Solarized-Light" ]]; then
+        echo -en "\e]P0fdf6e3" # bright white
+        echo -en "\e]P8b0ab9d" # white
+        echo -en "\e]P1dc322f" # red
+        echo -en "\e]P9cb4b16" # bright red
+        echo -en "\e]P2859900" # green
+        echo -en "\e]PA586e75" # bright green
+        echo -en "\e]P3b58900" # yellow
+        echo -en "\e]PB657b83" # bright yellow
+        echo -en "\e]P4268bd2" # blue
+        echo -en "\e]PC839496" # bright blue
+        echo -en "\e]P5d33682" # magenta
+        echo -en "\e]PD6c71c4" # bright magenta
+        echo -en "\e]P62aa198" # cyan
+        echo -en "\e]PE93a1a1" # bright cyan
+        echo -en "\e]P7657b83" # black
+        echo -en "\e]PF002b36" # bright black
     else
         echo -en "\e]P01c2127" # black
         echo -en "\e]P81c2127" # darkgrey
