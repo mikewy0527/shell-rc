@@ -1,19 +1,22 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+### Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+### Initialization code that may require console input (password prompts, [y/n]
+### confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# origin .zshrc config
-# source .zshrc-origin
+### origin .zshrc config
+### source .zshrc-origin
 
 setopt no_nomatch
 
-# http proxy setting
+### http proxy setting
 [[ ! -f "$HOME/.sh.d/.http_proxy_conf" ]] || source "$HOME/.sh.d/.http_proxy_conf"
 
-# profiling switch
+### exclude failed command from zsh history
+[[ ! -f "$HOME/.sh.d/.exclude_failed_cmd.conf" ]] || source "$HOME/.sh.d/.exclude_failed_cmd.conf"
+
+### profiling switch
 PROFILE_STARTUP=false
 
 if [[ "$PROFILE_STARTUP" == true ]]; then
@@ -32,8 +35,9 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
     setopt XTRACE
 fi
 
-# make prompt faster
+### make prompt faster
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export DISABLE_MAGIC_FUNCTIONS=true
 
 ### Added by Zinit's installer
@@ -51,8 +55,8 @@ source "$HOME/.zinit/bin/zinit.zsh" && \
     _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
+### Load a few important annexes, without Turbo
+### (this is currently required for annexes)
 zinit lucid light-mode for \
     zdharma-continuum/zinit-annex-rust \
     zdharma-continuum/zinit-annex-readurl \
@@ -91,7 +95,7 @@ zinit wait lucid light-mode for \
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
 
-# Speed up zsh compinit by only checking cache once a day
+### Speed up zsh compinit by only checking cache once a day
 autoload -Uz compinit
 () {
     setopt extendedglob local_options
@@ -104,16 +108,16 @@ autoload -Uz compinit
 
 case "$OSTYPE" in
 darwin*)
-    # ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed and
-    # these are never upgraded. So link Rubies to Homebrew's OpenSSL
-    # (brew --prefix too slow, so replace it with absolute path)
-    # export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+    ### ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed and
+    ### these are never upgraded. So link Rubies to Homebrew's OpenSSL
+    ### (brew --prefix too slow, so replace it with absolute path)
+    ### export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
     export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl@3.1"
 
-    # for install specified python version by pyenv
+    ### for install specified python version by pyenv
     export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
-    # disable update automatically when install packages
+    ### disable update automatically when install packages
     export HOMEBREW_NO_AUTO_UPDATE=true
     export HOMEBREW_NO_ANALYTICS=1
     ;;
@@ -121,7 +125,7 @@ darwin*)
 esac
 
 if [[ "$USER" != "root" ]]; then
-    # lazyload function
+    ### lazyload function
     lazyload_add_command() {
         eval "$1() { \
             unfunction $1; \
@@ -131,7 +135,7 @@ if [[ "$USER" != "root" ]]; then
     }
 
     lazyload_add_completion() {
-        local comp_name
+        local comp_name=_$1
         eval "${comp_name}() { \
             compdef -d $1; \
             _lazyload_completion_$1; \
@@ -140,7 +144,7 @@ if [[ "$USER" != "root" ]]; then
         compdef $comp_name $1
     }
 
-    # for multi-version ruby
+    ### for multi-version ruby
     _lazyload_command_rbenv() {
         eval "$(rbenv init -)"
     }
@@ -149,7 +153,7 @@ if [[ "$USER" != "root" ]]; then
         local complete_file=""
         case "$OSTYPE" in
         linux*)
-            complete_file="/usr/lib/rbenv/completions/rbenv.zsh"
+            complete_file="/usr/lib/rbenv/completions/_rbenv"
             ;;
         darwin*)
             complete_file="/usr/local/opt/rbenv/completions/rbenv.zsh"
@@ -165,15 +169,15 @@ if [[ "$USER" != "root" ]]; then
         lazyload_add_completion rbenv
     fi
 
-    # for pyenv
+    ### for pyenv
     _lazyload_command_pyenv() {
         eval "$(pyenv init -)"
     }
 
     _lazyload_completion_pyenv() {
-        # On ubuntu/debian, current pyenv version not found in package manager, and
-        # pyenv installed by git clone, so the completion file path was set point
-        # to cloned-dir
+        ### On ubuntu/debian, current pyenv version not found in package manager, and
+        ### pyenv installed by git clone, so the completion file path was set point
+        ### to cloned-dir
         local complete_file=""
         case "$OSTYPE" in
         linux*)
@@ -202,7 +206,7 @@ if [[ "$USER" != "root" ]]; then
         lazyload_add_completion pyenv
     fi
 
-    # for virtualenv
+    ### for virtualenv
     lazyload_venv_add_command() {
         eval "$1_$2() { \
             unfunction $1_$2; \
@@ -222,8 +226,8 @@ fi
 
 case "$OSTYPE" in
 mingw* | msys*)
-    # make /<drive>/... autocompletion work.
-    # e.g: /c/Windows/
+    ### make /<drive>/... autocompletion work.
+    ### e.g: /c/Windows/
     local drives=$(mount | sed -rn 's#^[A-Z]: on /([a-z]).*#\1#p' | tr '\n' ' ')
     zstyle ':completion:*' fake-files /: "/:$drives"
     # local drives=($(mount | command grep --perl-regexp '^\w: on /\w ' | cut --delimiter=' ' --fields=3))
@@ -235,42 +239,42 @@ esac
 
 export EDITOR="$(command -v vim)"
 
-# PATH deduplicate
+### PATH deduplicate
 export -U PATH
 
-# bind alt+l like bash
+### bind alt+l like bash
 bindkey "^[l" down-case-word
 
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 [[ ! -f "$HOME/.sh.d/autostart_sway_conf" ]] || source "$HOME/.sh.d/autostart_sway_conf"
 
-# Only set nnn environment in interactive shell
+### Only set nnn environment in interactive shell
 [[ ! -f "$HOME/.sh.d/.nnn_conf" ]] || source "$HOME/.sh.d/.nnn_conf"
 
-# command history setting
+### command history setting
 [[ ! -f "$HOME/.sh.d/.zsh_command_hist_conf" ]] || source "$HOME/.sh.d/.zsh_command_hist_conf"
 
-# alias setting
+### alias setting
 [[ ! -f "$HOME/.sh.d/.alias_conf" ]] || source "$HOME/.sh.d/.alias_conf"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+### To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# customize prompt
+### customize prompt
 export POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='$'
 export POWERLEVEL9K_DISABLE_GITSTATUS=true
 
-# zsh partial line (PROMPT_CR and PROMPT_SP)
-#   When a partial line is preserved, by default you will see an inverse+bold
-#   character at the end of the partial line: a "%" for a normal user or a "#"
-#   for root. If set, the shell parameter PROMPT_EOL_MARK can be used to
-#   customize how the end of partial lines are shown.
+### zsh partial line (PROMPT_CR and PROMPT_SP)
+###   When a partial line is preserved, by default you will see an inverse+bold
+###   character at the end of the partial line: a "%" for a normal user or a "#"
+###   for root. If set, the shell parameter PROMPT_EOL_MARK can be used to
+###   customize how the end of partial lines are shown.
 export PROMPT_EOL_MARK=''
 
-# >>> xmake >>>
+### >>> xmake >>>
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
-# <<< xmake <<<
+### <<< xmake <<<
 
 if [[ "$PROFILE_STARTUP" == true ]]; then
     unsetopt XTRACE
